@@ -14,6 +14,7 @@ Download2	: docker pull netbuyer/dockerbio:0.3
 * Download1 includes only DockerBIO
 
 * Download2 includes a reference(hg38), dbSNP and DockerBIO.
+ 
 //====================================================
 
 
