@@ -36,6 +36,7 @@ Part 1 – For Easy Installation
 
 
   $ docker pull netbuyer/dockerbio
+  
   $ mkdir /data/dockerbio
 
 
@@ -59,21 +60,22 @@ In above repositories, you can download one or more of following files:
 
 After unzipping, the folders will be created in the form shown below.
 /data/dockerbio/
-............................upload/ (upload folder)
-............................db/ (Snp db folder)
-............................refDb/ (refrence db folder)
-............................sample/ (sample folder)
-............................user/ (user file folder)
-.............................temp/ (temporary upload folder)
+
 
 5.	To run dockerBIO, enter the following command:
 
+
 $docker run -dit -h dockerbio --name dockerbio --privileged -v /data/dockerbio:/data/dockerbio -v /var/run/docker.sock: /var/run/docker.sock -p 8080:8080 -p 8090:8090 -p 8092:8092 -e HOSTIP=http://Service_Host_IP netbuyer/dockerbio:0.1 bash
+
 
 6.	Service_Host_IP should be replaced with your (public) ip (example : 192.168.24.24).
 
+
 $ docker exec dockerbio /opt/restart.sh
+
 7.	In the browser address bar, type http://Service_Host_IP:8080
+
+
 
 Part 2 - For Easy Use
 The first time, you can log in as ID: user@user.com and Password: User1234. After first login, making new account is strongly recommended. You can make a new account on the system.
