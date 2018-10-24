@@ -86,6 +86,7 @@ After you successfully login to your DockerBIO page, you will be able to see "Re
  
 
 	Run Docker
+ 
 First, drag and drop files you want to analyze into the UPLOAD USER FILE menu, and then check the files in the "user file Select" menu.
 
 Second, execute the desired program. You can run the dockers registered in the "Job Select" menu. For whole genome analysis, select _WGS (netbuyer/wgs) in the Job Select menu and select needed files from the user file Select menu, and then click the Run Docker menu.
