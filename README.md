@@ -13,6 +13,7 @@ DockerBIO is a web program based on java spring created with two Spring Boot mod
 -	SpringbootAsyn cJob - Asynchronous Module for Docker Implementation Monitoring
 -	SpringbootFileupload - Module to upload user files
  
+It is recommended to download from dockerhub.
 //====================================================
 
 Docker Pull Command
