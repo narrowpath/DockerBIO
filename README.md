@@ -15,32 +15,45 @@ Download2	: docker pull netbuyer/dockerbio:0.3
 * Download2 includes a reference(hg38), dbSNP and DockerBIO.
 
 
+
 Introducing projects
+
 Bioinformatics tools are being developed with various program languages and tested on various operating systems.. Biologists and bioinfomaticians want to build pipelines using a variety of tools, but it is not easy to compile, install and incorporate them into pipelines. DockerBIO is designed for biologists to easily use various bioinformatics tools from DockerHub, and easily make pipelines using these tools.
+
 By default, DockerBIO has most of the essential tools for NGS analysis such as Whole Genome analysis pipeline, RNA-Seq analysis pipeline, FastQC (quality check tool for fastq files), SnpShift (vcf annotation tool), Samtools, BWA (alignment tools), GATK (vcf calling tool), etc. However, users can register and use any tools and data on DockerBIO. For more information, please refer to Kwon et al., “DockerBIO: Web application for efficient use of bioinformatics Docker images”.
+
 DockerBIO is available for Linux (both Centos and Ubuntu) and Mac OS. Windows is not fully supported due to hyper-v issues.
+
 DockerBIO is a web program based on java spring created with two Spring Boot modules.
 -	SpringbootAsyn cJob - Asynchronous Module for Docker Implementation Monitoring
 -	SpringbootFileupload - Module to upload user files
+
+
 
 Part 1 – For Easy Installation
 1.	Install Docker at your PC, workstation, or server (https://www.docker.com/)
 2.	Enter the following commands:
 
+
   $ docker pull netbuyer/dockerbio
   $ mkdir /data/dockerbio
 
+
 3.	(optional) You can download and unzip files containing the Reference DB / SNP DB files from following repositories, and place them at /data/dockerbio.
+
 Google drive: https://drive.google.com/drive/folders/16jkIWSJbFYmrZ0GjJrMDq7trW714JYvI
 
 Sharefile: https://mygenomeboxmygenomebox.sharefile.com/share/view/sdcce93756ad45978
 
+
 In above repositories, you can download one or more of following files:
+
 1) dbAll.tar.gz : a compressed version of all versions of dbSNP
 2) refDbAll.tar.gz : a reference databases containing hg19 and hg38
 3) dockerbio_extra.tar.gz : a compressed version of both Reference hg38 and dbSNP150(hg38 ver)
 
 4.	Supposing you choose dockerbio_extra.tar.gz, you can unzip it with the following command:
+
 
   $ tar xvzf dockerbio_extra.tar.gz
 
