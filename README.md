@@ -15,7 +15,8 @@ DockerBIO is a web program based on java spring created with two Spring Boot mod
  
 //====================================================
 
-It is recommended to download from dockerhub.
+It is recommended to download from dockerhub(https://hub.docker.com/)
+
 //====================================================
 
 Docker Pull Command
