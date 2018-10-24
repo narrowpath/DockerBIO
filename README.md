@@ -1,6 +1,18 @@
 # DockerBIO
 Web application for efficient use of bioinformatics tools
 
+Introducing projects
+
+Bioinformatics tools are being developed with various program languages and tested on various operating systems.. Biologists and bioinfomaticians want to build pipelines using a variety of tools, but it is not easy to compile, install and incorporate them into pipelines. DockerBIO is designed for biologists to easily use various bioinformatics tools from DockerHub, and easily make pipelines using these tools.
+
+By default, DockerBIO has most of the essential tools for NGS analysis such as Whole Genome analysis pipeline, RNA-Seq analysis pipeline, FastQC (quality check tool for fastq files), SnpShift (vcf annotation tool), Samtools, BWA (alignment tools), GATK (vcf calling tool), etc. However, users can register and use any tools and data on DockerBIO. For more information, please refer to Kwon et al., “DockerBIO: Web application for efficient use of bioinformatics Docker images”.
+
+DockerBIO is available for Linux (both Centos and Ubuntu) and Mac OS. Windows is not fully supported due to hyper-v issues.
+
+DockerBIO is a web program based on java spring created with two Spring Boot modules.
+-	SpringbootAsyn cJob - Asynchronous Module for Docker Implementation Monitoring
+-	SpringbootFileupload - Module to upload user files
+ 
 //====================================================
 
 Docker Pull Command
@@ -16,20 +28,6 @@ Download2	: docker pull netbuyer/dockerbio:0.3
 * Download2 includes a reference(hg38), dbSNP and DockerBIO.
  
 //====================================================
-
-
-
-Introducing projects
-
-Bioinformatics tools are being developed with various program languages and tested on various operating systems.. Biologists and bioinfomaticians want to build pipelines using a variety of tools, but it is not easy to compile, install and incorporate them into pipelines. DockerBIO is designed for biologists to easily use various bioinformatics tools from DockerHub, and easily make pipelines using these tools.
-
-By default, DockerBIO has most of the essential tools for NGS analysis such as Whole Genome analysis pipeline, RNA-Seq analysis pipeline, FastQC (quality check tool for fastq files), SnpShift (vcf annotation tool), Samtools, BWA (alignment tools), GATK (vcf calling tool), etc. However, users can register and use any tools and data on DockerBIO. For more information, please refer to Kwon et al., “DockerBIO: Web application for efficient use of bioinformatics Docker images”.
-
-DockerBIO is available for Linux (both Centos and Ubuntu) and Mac OS. Windows is not fully supported due to hyper-v issues.
-
-DockerBIO is a web program based on java spring created with two Spring Boot modules.
--	SpringbootAsyn cJob - Asynchronous Module for Docker Implementation Monitoring
--	SpringbootFileupload - Module to upload user files
 
 
 
