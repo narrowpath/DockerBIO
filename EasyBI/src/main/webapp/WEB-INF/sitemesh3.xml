@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+	<mapping path="/*" decorator="/WEB-INF/decorator/loginLayout.jsp" />
+	<mapping path="/web/helix*" decorator="/WEB-INF/decorator/mainLayout.jsp" />
+	<mapping path="/web/adminTools*" decorator="/WEB-INF/decorator/adminLayout.jsp" />
+	<mapping path="/web/login/*" decorator="/WEB-INF/decorator/loginLayout.jsp" />
+	<mapping path="/web/error/*" decorator="/WEB-INF/decorator/loginLayout.jsp" />
+	<mapping path="/web/popup/*" decorator="/WEB-INF/decorator/popup.jsp" />
+
+	<mapping path="/web/helix/download/*" exclue="true" />
+	<mapping path="/web/helix/api/*" exclue="true" />
+	<mapping path="/web/helix/sim" exclue="true" />
+	<mapping path="/web/adminTools/api/*" exclue="true" />
+	<mapping path="/include/*" exclue="true" />
+	<mapping path="/html/*" exclue="true" />
+
+	<content-processor>
+		<tag-rule-bundle class="com.mygenomebox.www.common.filter.MySiteMeshFilter" />
+	</content-processor>
+</sitemesh>

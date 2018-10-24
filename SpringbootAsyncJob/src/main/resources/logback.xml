@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+    <property resource="config.properties"/>
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern> %d{yy-MM-dd HH:mm:ss} [%thread] %-5level %class{0}.%M %L - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/opt/dockerbio/logs/AsyncJob.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 파일이 하루에 한개씩 생성된다 -->
+            <fileNamePattern>/opt/dockerbio/logs/AsyncJob.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+ 
+        <encoder>
+            <pattern> %d{yy-MM-dd HH:mm:ss} [%thread] %-5level %class{0}.%M %L - %msg%n</pattern>
+        </encoder>
+    </appender>
+ 
+	<logger name="com.mygenomebox" level="DEBUG"></logger>
+	<logger name="org.springframework.web" level="DEBUG" />
+
+	<if condition='property("config.log.mode").equals("SERVICE")'>
+        <then>
+            <!-- 설정파일에 RUN_MODE 가 SERVICE로 정의되어 있으면 로깅 레벨을 INFO로 지정 -->
+            <root level="INFO">
+                <appender-ref ref="console"/>
+                <appender-ref ref="FILE"/>
+            </root>
+        </then>
+        <!-- 설정파일에 RUN_MODE 가 SERVICE로 정의되어 있지 않으면  로깅 레벨을 DEBUG 지정 -->
+        <else>
+            <root level="DEBUG">
+                <appender-ref ref="FILE"/>
+            </root>
+        </else>
+    </if>
+</configuration>

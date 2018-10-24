@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.mygenomebox.www.user.dao.UserMapper">
+	<resultMap id="BaseResultMap" type="User">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="noUser" property="noUser" jdbcType="BIGINT" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="nmUser" property="nmUser" jdbcType="VARCHAR" />
+		<result column="ynUse" property="ynUse" jdbcType="CHAR" />
+		<result column="auth" property="auth" jdbcType="VARCHAR" />
+		<result column="dtJoin" property="dtJoin" jdbcType="VARCHAR" />
+		<result column="dtLogin" property="dtLogin" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="getUserByUsername" resultType="com.mygenomebox.www.common.entity.UserLoginVO" parameterType="java.lang.String">
+		SELECT nmuser, password, (CASE YNUSE WHEN 'Y' THEN 1 ELSE 0 END) enabled, auth authority, nouser 
+		FROM TB_USER WHERE email=#{email,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectByPrimaryKey" resultType="User" parameterType="java.lang.Long">
+		SELECT
+			noUser, email, nmUser, password, auth, ynUse, dtJoin, dtLogin
+		FROM tb_user
+		WHERE noUser = #{noUser,jdbcType=BIGINT}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		DELETE FROM tb_user
+		WHERE noUser = #{noUser,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insert" parameterType="User">
+		INSERT INTO tb_user (noUser, email, nmUser, password, auth, ynuse)
+		VALUES (#{noUser}, #{email,jdbcType=VARCHAR}, #{nmUser,jdbcType=VARCHAR}, #{passwordEncrypt,jdbcType=VARCHAR},
+			ifnull(#{auth,jdbcType=VARCHAR},'ROLE_USER'), ifnull(#{ynUse,jdbcType=CHAR},'Y'))
+	</insert>
+	
+	<update id="loginSuccess"  parameterType="java.lang.String">
+		UPDATE tb_user SET dtlogin = (strftime('%Y%m%d%H%M%S',datetime('now','localtime')))
+		WHERE noUser = #{noUser}
+	</update>
+	
+	<select id="list" resultType="User" parameterType="java.lang.Long">
+		SELECT
+			noUser, email, nmUser, password, auth, ynUse, dtJoin, dtLogin
+		FROM tb_user
+	</select>
+	
+</mapper>

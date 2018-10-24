@@ -1,0 +1,19 @@
+<script>
+String.prototype.nvl=function(){
+	try {
+		if (typeof(this) == 'undefined') return '4';
+		return (!this || !this.length)?'null':this;
+	}
+	catch(e) {
+	    return '3';
+	}
+	
+};
+
+var test="test";
+console.log(test.nvl());
+var test2;
+console.log((typeof(test2) == 'undefined')?'null':'not null');
+console.log(test2.nvl());
+
+</script>

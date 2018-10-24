@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+    <property resource="config.properties"/>
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern> %date{yy-MM-dd HH:mm} %logger{10} %L - %msg%n</pattern>
+        </encoder>
+    </appender>
+ 
+	<logger name="com.mygenomebox" level="DEBUG"></logger>
+	<logger name="org.springframework.web" level="INFO" />
+
+    <root>
+        <appender-ref ref="console"/>
+    </root>
+</configuration>

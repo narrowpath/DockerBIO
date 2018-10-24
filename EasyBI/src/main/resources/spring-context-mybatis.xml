@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
+	default-lazy-init="true">
+
+	<description>Mybatis Configuration</description>
+
+	<context:property-placeholder ignore-unresolvable="true" location="classpath*:/project.properties" />
+
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<tx:annotation-driven proxy-target-class="true" order="2"/>
+	
+	<!-- Mybatis begin -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeAliasesPackage" value="com.mygenomebox.www" />
+		<property name="mapperLocations" value="classpath:/sql/*.xml" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<property name="basePackage" value="com.mygenomebox.www" />
+		<property name="annotationClass" value="com.mygenomebox.www.common.config.ibatis.MyBatisDao" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<aop:config>
+		<aop:pointcut id="txAdvisePointCut" expression="execution(* com.mygenomebox..service.*Service.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txAdvisePointCut" />
+	</aop:config>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="tx*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="insert*" propagation="SUPPORTS" rollback-for="Exception" />
+			<tx:method name="modify*" propagation="SUPPORTS" rollback-for="Exception" />
+			<tx:method name="update*" propagation="SUPPORTS" rollback-for="Exception" />
+			<tx:method name="delete*" propagation="SUPPORTS" rollback-for="Exception" />
+			<tx:method name="*" propagation="NOT_SUPPORTED" />
+		</tx:attributes>
+	</tx:advice>
+
+</beans>

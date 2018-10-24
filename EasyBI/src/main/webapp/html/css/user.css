@@ -1,0 +1,97 @@
+.input-tiny {
+	height: 20px;
+	padding: 5px 10px;
+	font-size: 12px;
+	line-height: 1.5;
+	border-radius: 3px;
+}
+
+.btn_tip_align{ vertical-align: text-bottom;}
+
+.w50{width:50px !important;}
+.w100{width:100px !important;}
+.w150{width:150px !important;}
+.w200{width:200px !important;}
+.w250{width:250px !important;}
+.w300{width:300px !important;}
+.w350{width:350px !important;}
+.w400{width:400px !important;}
+.w450{width:450px !important;}
+.w500{width:500px !important;}
+.wAll{width:100% !important;}
+
+.label50 {min-width: 50px !important; display: inline-block !important}
+.label90 {min-width: 90px !important; display: inline-block !important}
+.label100 {min-width: 100px !important; display: inline-block !important}
+.label150 {min-width: 150px !important; display: inline-block !important}
+.label200 {min-width: 200px !important; display: inline-block !important}
+
+.input_line_height{padding:1px; height:25px !important;}
+
+.modal-header {
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #0480be;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+
+.panel > .panel-body {
+    padding:5px !important;
+}
+.panel > .panel-body {
+    padding:5px !important;
+}
+
+.panel {
+    margin:5px !important;
+}
+
+
+.panel.panel-horizontal {
+    display:table;
+    width:100%;
+    margin-bottom:5px !important;
+}
+.panel.panel-horizontal > .panel-heading, .panel.panel-horizontal > .panel-body, .panel.panel-horizontal > .panel-footer {
+    display:table-cell;
+}
+.panel.panel-horizontal > .panel-heading, .panel.panel-horizontal > .panel-footer {
+    width: 25%;
+    border:0;
+    vertical-align: middle;
+}
+.panel.panel-horizontal > .panel-heading {
+    border-right: 1px solid #ddd;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 4px;
+    padding:5px !important;
+}
+.panel.panel-horizontal > .panel-body {
+    padding:5px !important;
+}
+.panel.panel-horizontal > .panel-footer {
+    border-left: 1px solid #ddd;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 4px;
+    padding:5px !important;
+}
+
+.colNoWrap{ 
+	white-space:nowrap; 
+	overflow: hidden; 
+	text-overflow: ellipsis; 
+	max-width: 300px !important;
+	/*
+	*/
+}
+
+.textAreaCss{
+	min-width: 100% !important; 
+	margin-bottom: 5px;
+	font-size: 16px;
+}

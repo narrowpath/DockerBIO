@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.mygenomebox.www.helix.dao.HelixMapper">
+	
+	<select id="singleJobList" resultType="com.mygenomebox.www.helix.entity.SingleJobInfo" parameterType="SingleJobInfo">
+		SELECT
+			noJob, noUser, dtReg, nmJob, idDocker, countDbArgument,	argument
+			, outputArgument, outputExt, countUserFileArgument, successCondition
+			, ynRefDb, ynDb, argumentRefDb, argumentDb, argumentUserDb
+			, refDb, db, ynPublic, tag
+		FROM tb_single_job_info
+		<where>
+			<if test='ynPublic'>
+		AND ynPublic=#{ynPublic,jdbcType=VARCHAR}
+			</if> 
+			<if test='noJob'>
+		AND noJob=#{noJob,jdbcType=VARCHAR} 
+			</if> 
+			<if test='noUser'>
+		AND noUser=#{noUser}
+			</if>
+			<if test='noJob'>
+		AND noJob=#{noJob}
+			</if>
+		</where>
+		ORDER BY noJob DESC
+	</select>
+	
+	<select id="jobRequestHistList" parameterType="map" resultType="JobRequestHist">
+		SELECT
+			noUser, noJob, dtJobStart
+			, dtJobEnd
+			, (SELECT nmCode FROM tb_code AS cd WHERE cd.groupCode='cdJobStat' AND cd.valueCode=A.cdJobStat ) AS cdJobStat
+			, (SELECT nmCode FROM tb_code AS cd WHERE cd.groupCode='cdJobEndStat' AND cd.valueCode=A.cdJobEndStat ) AS cdJobEndStat
+			, successCondition, msgResult, fileResult
+			, (select nmJob from tb_single_job_info AS B WHERE A.noJob=B.noJob) AS nmJob
+			, commandTest
+		FROM tb_job_request_hist AS A
+		WHERE noUser=#{noUser,jdbcType=BIGINT}
+		<if test='ynSimulate'>
+		AND ynSimulate=#{ynSimulate,jdbcType=VARCHAR} 
+		</if> 
+		<if test='noJob'>
+		AND noJob=#{noJob,jdbcType=VARCHAR} 
+		</if> 
+		AND CAST(cdJobStat as decimal) &lt; 90
+		Order by noUser, dtJobStart desc
+	</select>
+	
+	<insert id="insertJobRequestHist" parameterType="JobRequestHist">
+		INSERT INTO tb_job_request_hist
+			(noUser, noJob, dtJobStart, commandDocker, commandTest, ynSimulate)
+		VALUES
+			(#{noUser},#{noJob},#{dtJobStart},#{commandDocker},#{commandTest},#{ynSimulate})
+	</insert>
+	
+	<insert id="updateAsyncResult" parameterType="JobRequestHist">
+		UPDATE tb_job_request_hist SET
+			cdJobStat=#{cdJobStat,jdbcType=VARCHAR}
+			<if test="cdJobEndStat != null and cdJobEndStat != ''">
+			, cdJobEndStat=#{cdJobEndStat,jdbcType=VARCHAR}
+			</if>
+			<if test="msgResult != null and msgResult != ''">
+			, msgResult=#{msgResult,jdbcType=VARCHAR}
+			</if>
+			<if test="cdJobStat == '20'">
+			, dtJobEnd=(strftime('%Y%m%d%H%M%S',datetime('now','localtime')))
+			</if>
+		WHERE noUser=#{noUser,jdbcType=BIGINT} AND dtJobStart=#{dtJobStart,jdbcType=VARCHAR}
+	</insert>
+	
+	<insert id="InsertSingleJob" parameterType="SingleJobInfo">
+		INSERT INTO tb_single_job_info
+			(noUser, nmJob, idDocker, countDbArgument,	argument
+			, outputArgument, outputExt, countUserFileArgument, successCondition
+			, ynRefDb, ynDb, argumentRefDb, argumentDb, argumentUserDb, refDb, db, tag
+			<if test='ynPublic'>, ynPublic</if>
+			)
+		VALUES
+			(#{noUser}, #{nmJob}, #{idDocker}, #{countDbArgument}, #{argument}
+			, #{outputArgument}, #{outputExt}, #{countUserFileArgument}, #{successCondition}
+			, #{ynRefDb}, #{ynDb}, #{argumentRefDb}, #{argumentDb}, #{argumentUserDb}
+			, #{refDb}, #{db}, #{tag}
+			<if test="ynPublic != null and !ynPublic.equals('')">, #{ynPublic}</if>
+			)
+	</insert>
+	
+	<insert id="updateSingleJob" parameterType="SingleJobInfo">
+		UPDATE tb_single_job_info SET
+			nmJob=#{nmJob,jdbcType=VARCHAR}
+			, idDocker=#{idDocker,jdbcType=VARCHAR}
+			, countDbArgument=#{countDbArgument,jdbcType=VARCHAR}
+			, argument=#{argument,jdbcType=VARCHAR}
+			, outputArgument=#{outputArgument,jdbcType=VARCHAR}
+			, outputExt=#{outputExt,jdbcType=VARCHAR}
+			, countUserFileArgument=#{countUserFileArgument,jdbcType=VARCHAR}
+			, successCondition=#{successCondition,jdbcType=VARCHAR}
+			, ynRefDb=#{ynRefDb,jdbcType=VARCHAR}
+			, ynDb=#{ynDb,jdbcType=VARCHAR}
+			, argumentRefDb=#{argumentRefDb,jdbcType=VARCHAR}
+			, argumentDb=#{argumentDb,jdbcType=VARCHAR}
+			, argumentUserDb=#{argumentUserDb,jdbcType=VARCHAR}
+			, refDb=#{refDb,jdbcType=VARCHAR}
+			, db=#{db,jdbcType=VARCHAR}
+			, tag=#{tag,jdbcType=VARCHAR}
+			<if test="ynPublic != null and !ynPublic.equals('')">
+			, ynPublic=#{ynPublic,jdbcType=VARCHAR}
+			</if>
+		WHERE noJob=#{noJob,jdbcType=BIGINT} AND noUser=#{noUser,jdbcType=BIGINT}
+	</insert>
+	
+	<insert id="deleteSingleJob" parameterType="SingleJobInfo">
+		DELETE FROM tb_single_job_info
+		WHERE noJob=#{noJob,jdbcType=BIGINT} AND noUser=#{noUser,jdbcType=BIGINT} AND ynPublic='N'
+	</insert>
+	
+	<insert id="InsertRequestDb" parameterType="RequestDb">
+		INSERT OR REPLACE INTO tb_request_db (noUser, email, dbType, dbUrl, desc)
+		VALUES(#{noUser}, #{email}, #{dbType}, #{dbUrl}, #{desc})
+	</insert>
+	
+	<select id="isDockerTagExists" parameterType="String" resultType="boolean">
+		SELECT CASE WHEN ( SELECT COUNT(idDocker) FROM tb_docker_tag_info WHERE idDocker=#{idDocker})>0 THEN 1 ELSE 0 END as result
+	</select>
+	
+	<delete id="deleteDockerTagInfo" parameterType="String">
+		DELETE FROM tb_docker_tag_info 
+		WHERE idDocker=#{idDocker} 
+	</delete>
+	
+	<insert id="insertDockerTagInfo" parameterType="java.util.List">
+		INSERT INTO tb_docker_tag_info(idDocker, tag, ynLast, tagStat, noUser)
+		<foreach item="item" index="index" collection="list" open="" separator=" " close="">
+		<if test='index > 0'>UNION </if>SELECT #{item.idDocker}, #{item.tag}, #{item.ynLast}, #{item.tagStat}, #{item.noUser}
+		</foreach>
+	</insert>
+	
+	<select id="requestDbList" parameterType="requestDb" resultType="requestDb">
+		SELECT * FROM tb_request_db
+	</select>
+</mapper>

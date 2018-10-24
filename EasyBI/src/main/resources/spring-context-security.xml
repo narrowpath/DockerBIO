@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/security
+			http://www.springframework.org/schema/security/spring-security-4.2.xsd"
+	default-lazy-init="true">
+
+	<sec:global-method-security secured-annotations="enabled" jsr250-annotations="enabled" />
+
+	<sec:http auto-config="true" use-expressions="true" security="none" pattern="/web/helix/api/asyncResultUpdate"></sec:http>
+
+	<sec:http auto-config="true">
+		<sec:headers>
+			<sec:frame-options disabled="true"></sec:frame-options>
+		</sec:headers>
+		<sec:intercept-url pattern="/" access="permitAll" />
+		<sec:intercept-url pattern="/web/login/**" access="permitAll" />
+		<sec:intercept-url pattern="/web/user/insert" access="permitAll" />
+		<sec:intercept-url pattern="/web/admin**" access="hasRole('ADMIN') or hasRole('MANAGER')" />
+		<sec:intercept-url pattern="/web/**" access="hasRole('USER') or hasRole('ADMIN')" />
+		<!-- <sec:intercept-url pattern="/web/home**" access="permitAll" /> -->
+		<sec:form-login login-processing-url="/web/login/process"
+			login-page="/web/login/login" username-parameter="email"
+			password-parameter="password" authentication-failure-url="/web/login/login"
+			authentication-success-handler-ref="customAuthenticationSuccessHandler" />
+		<sec:csrf />
+	</sec:http>
+
+	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<bean id="customUserDetailsService" class="com.mygenomebox.www.common.config.spring.CustomUserDetailsService" />
+	<bean id="customAuthenticationSuccessHandler" class="com.mygenomebox.www.common.config.spring.CustomAuthenticationSuccessHandler">
+		<property name="targetUrlParameter" value="loginRedirect" />
+		<property name="useReferer" value="false" />
+		<property name="defaultUrl" value="/web/helix/" />
+	</bean>
+
+	<sec:authentication-manager>
+		<sec:authentication-provider user-service-ref="customUserDetailsService">
+			<sec:password-encoder ref="encoder" />
+		</sec:authentication-provider>
+	</sec:authentication-manager>
+</beans>
