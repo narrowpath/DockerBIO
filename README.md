@@ -3,10 +3,15 @@ Web application for efficient use of bioinformatics tools
 
 
 Docker Pull Command
+
 Docker name	: netbuyer/dockerbio
+
 Download1	: docker pull netbuyer/dockerbio
+
 Download2	: docker pull netbuyer/dockerbio:0.3
+
 * Download1 includes only DockerBIO
+
 * Download2 includes a reference(hg38), dbSNP and DockerBIO.
 
 
