@@ -74,7 +74,7 @@ $docker run -dit -h dockerbio --name dockerbio --privileged -v /data/dockerbio:/
 $ docker exec dockerbio /opt/restart.sh
 
 7.	In the browser address bar, type http://Service_Host_IP:8080
-//
+
 
 
 
@@ -83,6 +83,7 @@ Part 2 - For Easy Use
 The first time, you can log in as ID: user@user.com and Password: User1234. After first login, making new account is strongly recommended. You can make a new account on the system.
 
 After you successfully login to your DockerBIO page, you will be able to see "RegisterDocker" at which you can register new Docker and "Run Docker" menu at which you can execute the registered Docker from "Register Docker".
+ 
 
 	Run Docker
 First, drag and drop files you want to analyze into the UPLOAD USER FILE menu, and then check the files in the "user file Select" menu.
@@ -91,11 +92,11 @@ Second, execute the desired program. You can run the dockers registered in the "
 
 Most options can be changed as needed, but we recommend using the default options tested in "Register Docker" and changing the version of REF DB or dbSNP as needed. If you need to modify it, you can create a new option in the Register Docker menu. We will show examples of the most commonly used tools, BWA, FastQC, SnpSift, WGS pipeline, and WTS pipeline.
 
-
+ 
 	Register Docker
 
 This page provides functions for downloading a number of bioinformatics tools registered in DockerHub and registering them with DockerBIO. This page consists of two menus: Docker LIST and Docker Info Register. Docker LIST is a menu to test whether the registered options  works. The Docker Info Register can be used to search for Docker images in DockerHub and download them to the current system. It also provides functions for setting various options.
-
+ 
 	Docker LIST
 
 If you click the EDIT button in the action menu, you can see the menus in the Docker Info Register and modify options if necessary. After setting the options, you need to click the TEST button to set the best option in the SIMULATE Docker window. You can test whether the Docker is working using your options and see it in Run Docker. If you want to change the current Run Docker options, you can modify them here.
