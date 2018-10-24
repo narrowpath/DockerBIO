@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.mygenomebox.helix.boot.asyncJob.dao.AsyncJobMapper">
+	<select id="asyncJobHistList" resultType="AsyncJobHist">
+		SELECT
+			processJobName, noUser, noJob, dtJobStart, dtJobEnd
+			, (SELECT nmCode FROM tb_code AS cd WHERE cd.groupCode='cdJobStat' AND cd.valueCode=A.cdJobStat ) AS cdJobStat
+			, (SELECT nmCode FROM tb_code AS cd WHERE cd.groupCode='cdJobEndStat' AND cd.valueCode=A.cdJobEndStat ) AS cdJobEndStat
+			, desc
+		FROM tb_async_job_hist AS A
+		WHERE CAST(IFNULL(cdJobStat,'00') as decimal) &lt; 90
+		AND IFNULL(dtJobEnd,(strftime('%Y%m%d%H%M%S',datetime('now','localtime')))) &lt; (strftime('%Y%m%d%H%M%S',datetime('now','localtime','+1 day')))
+		Order by dtJobStart asc
+	</select>
+	
+	<insert id="insertOrUpdate" parameterType="AsyncJobHist">
+		INSERT OR REPLACE INTO tb_async_job_hist (processJobName, noUser, noJob, dtJobStart, cdJobStat, cdJobEndStat, desc, dtJobEnd) 
+		VALUES(#{processJobName}, #{noUser}, #{noJob}, #{dtJobStart}, #{cdJobStat}, #{cdJobEndStat}, #{desc}
+			,<if test='cdJobStat!="10" and cdJobStat!="00"'>(strftime('%Y%m%d%H%M%S',datetime('now','localtime')))</if><if test='cdJobStat=="10" or cdJobStat=="00"'>null</if>
+		);
+	</insert>
+</mapper>

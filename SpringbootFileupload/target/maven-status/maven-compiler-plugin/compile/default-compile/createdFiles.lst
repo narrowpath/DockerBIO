@@ -1,0 +1,8 @@
+com/mygenomebox/helix/boot/controller/IndexController.class
+com/mygenomebox/helix/boot/controller/RestUploadController$WebConfig.class
+com/mygenomebox/helix/boot/SpringBootWebApplication.class
+com/mygenomebox/helix/boot/controller/RestUploadController.class
+com/mygenomebox/helix/boot/exception/RestGlobalExceptionHandler.class
+com/mygenomebox/helix/boot/model/Response.class
+com/mygenomebox/helix/boot/model/UploadModel.class
+com/mygenomebox/helix/boot/exception/CustomError.class

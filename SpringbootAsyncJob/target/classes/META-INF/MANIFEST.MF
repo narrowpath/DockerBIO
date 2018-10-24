@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: AsyncJob
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: ubuntu
+Implementation-Vendor-Id: com.mygenomebox.helix.boot
+Build-Jdk: 1.8.0_171
+Implementation-URL: http://projects.spring.io/spring-boot/Async/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
