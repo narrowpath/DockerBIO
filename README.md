@@ -70,7 +70,7 @@ After unzipping, the folders will be created in the form shown below.
 5.	To run dockerBIO, enter the following command:
 
 
-$docker run -dit -h dockerbio --name dockerbio --privileged -v /data/dockerbio:/data/dockerbio -v /var/run/docker.sock: /var/run/docker.sock -p 8080:8080 -p 8090:8090 -p 8092:8092 -e HOSTIP=http://Service_Host_IP netbuyer/dockerbio:0.1 bash
+$docker run -dit -h dockerbio --name dockerbio --privileged -v /data/dockerbio:/data/dockerbio -v /var/run/docker.sock:/var/run/docker.sock -p 8080:8080 -p 8090:8090 -p 8092:8092 -e HOSTIP=http://Service_Host_IP netbuyer/dockerbio:0.1 bash
 
 
 6.	Service_Host_IP should be replaced with your (public) ip (example : 192.168.24.24).
